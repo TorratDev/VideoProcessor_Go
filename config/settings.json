@@ -1,0 +1,5 @@
+﻿{
+  "videoSourceURL": "https://example.com/video",
+  "downloadPath": "./downloads/",
+  "outputPath": "./output/"
+}
