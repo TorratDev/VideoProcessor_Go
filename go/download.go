@@ -1,4 +1,4 @@
-﻿package main
+package main
 
 import (
 	"encoding/json"
@@ -15,9 +15,20 @@ type Config struct {
 
 func LoadConfig() Config {
 	var config Config
-	file, _ := os.Open("../config/settings.json")
-	defer file.Close()
-	json.NewDecoder(file).Decode(&config)
+	file, err := os.Open("../config/settings.json")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer func(file *os.File) {
+		err := file.Close()
+		if err != nil {
+			fmt.Println(err)
+		}
+	}(file)
+	err = json.NewDecoder(file).Decode(&config)
+	if err != nil {
+		fmt.Println(err)
+	}
 	return config
 }
 
@@ -26,13 +37,23 @@ func DownloadVideo(url, filepath string) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+			fmt.Println(err)
+		}
+	}(resp.Body)
 
 	file, err := os.Create(filepath)
 	if err != nil {
 		return err
 	}
-	defer file.Close()
+	defer func(file *os.File) {
+		err := file.Close()
+		if err != nil {
+			fmt.Println(err)
+		}
+	}(file)
 
 	_, err = io.Copy(file, resp.Body)
 	if err != nil {
