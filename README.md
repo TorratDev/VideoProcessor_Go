@@ -3,7 +3,7 @@
 This project downloads a video from a specified URL and converts it to audio.
 
 ## Requirements
-- Go 1.18+
+- Go 1.23
 - ffmpeg (for video to audio conversion)
 
 ## Setup
