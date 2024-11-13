@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -13,9 +15,18 @@ func TestDownloadVideo(t *testing.T) {
 	tempDir := t.TempDir()
 	tempFile := filepath.Join(tempDir, "test_video.mp4")
 
+	file, err := os.Open("../assets/test_video.mp4")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	expectedData, err := io.ReadAll(file)
+	if err != nil {
+		t.Fatal(err)
+	}
 	// Set up a test server to simulate downloading a video
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		_, err := w.Write([]byte("mock video data"))
+		_, err := w.Write(expectedData)
 		if err != nil {
 			return
 		}
@@ -23,7 +34,7 @@ func TestDownloadVideo(t *testing.T) {
 	defer server.Close()
 
 	// Run the DownloadVideo function
-	err := DownloadVideo(server.URL, tempFile)
+	err = DownloadVideo(server.URL, tempFile)
 	if err != nil {
 		t.Fatalf("DownloadVideo failed: %v", err)
 	}
@@ -33,8 +44,8 @@ func TestDownloadVideo(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to read downloaded file: %v", err)
 	}
-	expectedData := "mock video data"
-	if string(data) != expectedData {
-		t.Errorf("Downloaded data does not match, got %s, want %s", string(data), expectedData)
+
+	if !bytes.Equal(data, expectedData) {
+		t.Errorf("Downloaded data does not match")
 	}
 }
