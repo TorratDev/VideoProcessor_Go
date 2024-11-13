@@ -53,4 +53,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: html-coverage-report
-          path: coverage.html
+          path: ./go/coverage.html
