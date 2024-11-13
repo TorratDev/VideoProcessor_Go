@@ -1,3 +1,5 @@
+[![Go](https://github.com/TorratDev/VideoProcessor_Go/actions/workflows/go.yml/badge.svg)](https://github.com/TorratDev/VideoProcessor_Go/actions/workflows/go.yml)
+
 # Video Processor
 
 This project downloads a video from a specified URL and converts it to audio.
