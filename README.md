@@ -1,4 +1,5 @@
 [![Go](https://github.com/TorratDev/VideoProcessor_Go/actions/workflows/go.yml/badge.svg)](https://github.com/TorratDev/VideoProcessor_Go/actions/workflows/go.yml)
+[![Build and Deploy Docker Image](https://github.com/TorratDev/VideoProcessor_Go/actions/workflows/deploy.yml/badge.svg)](https://github.com/TorratDev/VideoProcessor_Go/actions/workflows/deploy.yml)
 
 # Video Processor
 
