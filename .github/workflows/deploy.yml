@@ -28,8 +28,8 @@ jobs:
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v4
         with:
-          context: ./backend/video_processor/go
-          file: ./backend/video_processor/go/Dockerfile
+          context: ./VideoProcessor_Go/go
+          file: ./VideoProcessor_Go/go/Dockerfile
           push: true
           tags: |
             ghcr.io/anhqv-video-processor:latest
