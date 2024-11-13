@@ -31,7 +31,26 @@ jobs:
           cd ./go/
           go build -v ./...
 
-      - name: Test
+      - name: Test with coverage
         run: |
           cd ./go/
-          go test -v ./...
+          go test -v -coverprofile=coverage.out -covermode=atomic ./...
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: ./go/coverage.out
+
+      - name: Generate HTML coverage report
+        run: |
+          cd ./go/
+          go tool cover -html=coverage.out -o coverage.html
+
+      - name: Upload HTML coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-coverage-report
+          path: ./go/coverage.html
