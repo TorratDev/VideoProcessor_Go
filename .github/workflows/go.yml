@@ -31,7 +31,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          go mod download
           sudo apt update
           sudo apt install ffmpeg -y
 
